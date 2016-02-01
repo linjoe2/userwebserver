@@ -34,15 +34,19 @@ app.post('/searchRequest', function(req, resp) {
 
 
 app.post('/addRequest', function(req, resp) {
-	console.log(req.body.firstName)
-	console.log(req.body.lastName)
-	console.log(req.body.email)
+	var newUser = new Object();
+	newUser.firstname = req.body.firstName;
+	newUser.lastname = req.body.lastName;
+	newUser.email = req.body.email;
+	var user = JSON.stringify(newUser);
+	console.log(user)
+	users.push(newUser)
 });
 
 
 
 app.get('/allusers', function(req, resp) {
-	console.log('users sent');
+	console.log('users list sent');
 	resp.send(users)
 });
 
