@@ -3,13 +3,20 @@ var app = express();
 var bodyParser = require('body-parser');
 var users = require('../users.json')
 
+app.set('views', './views');
+app.set('view engine', 'jade');
+
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
 app.get('/', function(req, resp) {
-	resp.sendfile('index.html')
+	resp.render('index');
 })
+
+
+
+
 app.post('/searchRequest', function(req, resp) {
 	var b = 0
 	for (var i = users.length - 1; i >= 0; i--) {
