@@ -1,14 +1,22 @@
 html
   head
     title User Information app
-    script(type='text/javascript', src='js/app.js')
+    link(type='stylesheet', href='http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css')
+    script(src='http://code.jquery.com/jquery-1.10.2.js')
+    script(type='text/javascript', src='http://code.jquery.com/ui/1.11.4/jquery-ui.js')
   body
-    h1 Search
-    form(action='http://localhost:3000/searchRequest', method='post')
-      input(type='text', name='Name', placeholder='wie zoek je?')
-      br
-      button(type='submit') Submit
-    a(href='http://localhost:3000/allusers') all users
+
+
+    h1 All users
+    div(class='allusrs')
+      script.
+          function addlist() {
+            $.get("/allusers", function (response) { 
+              $('.allusrs').append("<p>" + response + "</p>");
+          });
+          }
+          addlist()
+
     h1 Add User
     form(action='http://localhost:3000/addRequest', method='post')
       input(type='text', name='firstName', placeholder='your name')
@@ -16,4 +24,32 @@ html
       input(type='text', name='email', placeholder='your Email adress')
       br
       button(type='submit') Submit
-    a(href='http://localhost:3000/allusers') all users
+
+    h1 Search
+      form
+        input#name2(type="text" placeholder="who are you looking for?")
+        input#searchButton(type="button" value="search")
+
+    div(class='found')
+
+script.
+       $("#searchButton").click(function() {
+          var Name = {
+            name: $("#name2").val()
+          };
+          $.post("/searchRequest2", Name, function(response, textStatus) {
+            $('.found').append("<p>"  + response + "</p>");
+          });
+        });
+
+script.
+      name2.onkeypress= function() {
+          var Name = {
+            name: $("#name2").val()
+          };
+          $.post("/searchRequest2", Name, function(response, textStatus) {
+            $('.found').append("<p>"  + response + "</p>");
+          });
+        };
+
+
