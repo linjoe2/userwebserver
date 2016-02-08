@@ -15,8 +15,6 @@ app.get('/', function(req, resp) {
 })
 
 
-
-
 app.post('/searchRequest', function(req, resp) {
 	var b = 0
 	for (var i = users.length - 1; i >= 0; i--) {
@@ -39,6 +37,37 @@ app.post('/searchRequest', function(req, resp) {
 	};
 });
 
+app.post('/searchRequest2',
+	bodyParser.urlencoded({
+		extended: true
+	}),
+	function(request, response) {
+		var b = 0
+		var usr = request.body.name
+		if (usr.length === 0) {
+			console.log('blank field')
+			b = 1
+		} else {
+			console.log('request= ' + usr)
+			for (var i = 0; i <= users.length - 1; i++) {
+				var usrt = users[i].firstname + ' ' + users[i].lastname
+				if (usrt.indexOf(usr) === -1) {
+				} else {
+					response.send('Name: ' + JSON.stringify(usrt) + '<br>' + 'Email: ' + JSON.stringify(users[i].email));
+					console.log(usrt + ' got searched')
+					var b = 1
+				}
+				if (i === users.length - 1 && b === 0) {
+					response.send('user not found');
+					console.log('user not found')
+					var b = 1
+				};
+			};
+			console.log('----')
+		}
+	}
+);
+
 
 app.post('/addRequest', function(req, resp) {
 	var newUser = new Object();
@@ -48,13 +77,20 @@ app.post('/addRequest', function(req, resp) {
 	var user = JSON.stringify(newUser);
 	console.log(user)
 	users.push(newUser)
+	resp.send(user)
 });
 
 
 
 app.get('/allusers', function(req, resp) {
 	console.log('users list sent');
-	resp.send(users)
+	resp.writeHead(200, {
+		'Content-Type': 'text/plain'
+	})
+	for (var i = users.length - 1; i >= 0; i--) {
+		resp.write('Firstname: ' + JSON.stringify(users[i].firstname) + '<br>' + "Lastname: " + JSON.stringify(users[i].lastname) + '<br>' + 'Email: ' + JSON.stringify(users[i].email) + '<br>' + '<br>');
+	}
+	resp.end();
 });
 
 
@@ -63,10 +99,9 @@ var server = app.listen(3000, function() {
 });
 
 
-function findName(request, users) {
-	for (var i = users.length - 1; i >= 0; i--) {
-		if (users[i].firstname === req.query) {
-			return users[i].firstname;
-		};
-	}
+
+function addlist() {
+	$.get("/allusers", function(response) {
+		$('.allusrs').append("<p>" + response + "</p>");
+	});
 }
