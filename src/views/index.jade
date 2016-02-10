@@ -34,6 +34,7 @@ html
 
 script.
        $("#searchButton").click(function() {
+          $('.found').html('');
           var Name = {
             name: $("#name2").val()
           };
@@ -43,13 +44,20 @@ script.
         });
 
 script.
-      name2.onkeyup= function() {
+  $(document).ready(function() {
+      var time = 0;
+      var lasttime = 0;
+      $("#name2").keyup(function() {
+        time = Date.now()
+        if (time - lasttime > 300 || time === 0) {
+          lasttime = time;
+          $('.found').html('');
           var Name = {
             name: $("#name2").val()
           };
           $.post("/searchRequest2", Name, function(response, textStatus) {
-            $('.found').append("<p>"  + response + "</p>");
+            $('.found').append("<p>" + response + "</p>");
           });
-        };
-
-
+        }
+      })
+    })

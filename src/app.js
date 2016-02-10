@@ -51,8 +51,7 @@ app.post('/searchRequest2',
 			console.log('request= ' + usr)
 			for (var i = 0; i <= users.length - 1; i++) {
 				var usrt = users[i].firstname + ' ' + users[i].lastname
-				if (usrt.indexOf(usr) === -1) {
-				} else {
+				if (usrt.indexOf(usr) === -1) {} else {
 					response.send('Name: ' + JSON.stringify(usrt) + '<br>' + 'Email: ' + JSON.stringify(users[i].email));
 					console.log(usrt + ' got searched')
 					var b = 1
@@ -89,7 +88,7 @@ app.get('/allusers', function(req, resp) {
 	})
 	for (var i = users.length - 1; i >= 0; i--) {
 		resp.write('Firstname: ' + JSON.stringify(users[i].firstname) + '<br>' + "Lastname: " + JSON.stringify(users[i].lastname) + '<br>' + 'Email: ' + JSON.stringify(users[i].email) + '<br>' + '<br>');
-	}
+	};
 	resp.end();
 });
 
@@ -105,3 +104,28 @@ function addlist() {
 		$('.allusrs').append("<p>" + response + "</p>");
 	});
 }
+
+
+
+        console.log(time)
+        $("#name2").keyup(function() { 
+        press(time) 
+      });
+
+      function press(time) {
+      var time2 = Date.now()
+      console.log('time: ' + time + ' time2: ' + time2);
+         if(time <= time2 -3000) {
+           console.log('test')
+           $('.found').html('');
+            var Name = {
+              name: $("#name2").val()
+             };
+            $.post("/searchRequest2", Name, function(response, textStatus) {
+             $('.found').append("<p>"  + response + "</p>");
+            });
+        };
+        var time = Date.now()
+      };
+
+
