@@ -41,6 +41,8 @@ app.post('/searchRequest2',
 	bodyParser.urlencoded({
 		extended: true
 	}),
+
+
 	function(request, response) {
 		var b = 0
 		var usr = request.body.name
@@ -104,28 +106,26 @@ function addlist() {
 		$('.allusrs').append("<p>" + response + "</p>");
 	});
 }
+		// var time = 0
+  //       console.log(time)
+  //       $("#name2").keyup(function() { 
+  //       press(time) 
+  //     });
 
-
-
-        console.log(time)
-        $("#name2").keyup(function() { 
-        press(time) 
-      });
-
-      function press(time) {
-      var time2 = Date.now()
-      console.log('time: ' + time + ' time2: ' + time2);
-         if(time <= time2 -3000) {
-           console.log('test')
-           $('.found').html('');
-            var Name = {
-              name: $("#name2").val()
-             };
-            $.post("/searchRequest2", Name, function(response, textStatus) {
-             $('.found').append("<p>"  + response + "</p>");
-            });
-        };
-        var time = Date.now()
-      };
+  //     function press(time) {
+  //     var time2 = Date.now()
+  //     console.log('time: ' + time + ' time2: ' + time2);
+  //        if(time <= time2 -3000) {
+  //          console.log('test');
+  //          $('.found').html('');
+  //           var Name = {
+  //             name: $("#name2").val()
+  //            };
+  //           $.post("/searchRequest2", Name, function(response, textStatus) {
+  //            $('.found').append("<p>"  + response + "</p>");
+  //           });
+  //       };
+  //       var time = Date.now()
+  //     };
 
 
